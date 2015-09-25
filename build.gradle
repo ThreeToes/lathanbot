@@ -16,17 +16,6 @@ apply plugin: 'spring-boot'
 sourceCompatibility = '1.8'
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
-// NetBeans will automatically add "run" and "debug" tasks relying on the
-// "mainClass" property. You may however define the property prior executing
-// tasks by passing a "-PmainClass=<QUALIFIED_CLASS_NAME>" argument.
-//
-// Note however, that you may define your own "run" and "debug" task if you
-// prefer. In this case NetBeans will not add these tasks but you may rely on
-// your own implementation.
-if (!hasProperty('mainClass')) {
-    ext.mainClass = ''
-}
-
 
 repositories {
     jcenter()
@@ -40,9 +29,9 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-web"){
         exclude module: 'spring-boot-starter-tomcat'
     }
+    compile("javax.el:javax.el-api:3.0.0")
     compile("org.thymeleaf:thymeleaf-spring4")
     compile("nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect")
-    compile 'com.fasterxml.jackson.core:jackson-databind:2.5.+'
     compile 'org.scala-lang:scala-library:2.11.+'
     compile 'org.pircbotx:pircbotx:2.0.+'
     testCompile 'junit:junit:4.+'

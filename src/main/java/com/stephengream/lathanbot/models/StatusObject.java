@@ -1,14 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.stephengream.lathanbot.models;
 
 /**
- *
+ * Simple status object to pass back to clients
  * @author stephen
  */
 public class StatusObject {
+    private String message;
     
+    public StatusObject(String message){
+        this.message = message;
+    }
+    
+    public String getMessage(){
+        return message;
+    }
 }

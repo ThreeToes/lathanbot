@@ -26,13 +26,20 @@ repositories {
 }
 
 dependencies {
-    compile("org.springframework.boot:spring-boot-starter-web"){
-        exclude module: 'spring-boot-starter-tomcat'
-    }
-    compile("javax.el:javax.el-api:3.0.0")
-    compile("org.thymeleaf:thymeleaf-spring4")
-    compile("nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect")
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile 'org.thymeleaf:thymeleaf-spring4'
+    compile 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
     compile 'org.scala-lang:scala-library:2.11.+'
     compile 'org.pircbotx:pircbotx:2.0.+'
-    testCompile 'junit:junit:4.+'
+    compile 'javax.inject:javax.inject:1'
+    // tag::actuator[]
+    compile("org.springframework.boot:spring-boot-starter-actuator")
+    // end::actuator[]
+    // tag::tests[]
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+    // end::tests[]
+}
+
+task wrapper(type: Wrapper){
+    gradleVersion = '2.6'
 }

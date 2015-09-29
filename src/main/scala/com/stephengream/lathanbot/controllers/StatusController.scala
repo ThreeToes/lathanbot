@@ -6,7 +6,7 @@
 
 package com.stephengream.lathanbot.controllers
 import com.stephengream.lathanbot.models.StatusObject
-import org.springframework.web.bind.annotation.{RestController, RequestMapping};
+import org.springframework.web.bind.annotation.{RestController, RequestMapping, ResponseBody};
 
 /**
  * 
@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.{RestController, RequestMapping};
 class StatusController {
   
   @RequestMapping(Array("/"))
+  @ResponseBody
   def index() : StatusObject = {
-    new StatusObject("OK");
+    val s = new StatusObject();
+    s.setMessage("Greetings")
+    s
   }
 }

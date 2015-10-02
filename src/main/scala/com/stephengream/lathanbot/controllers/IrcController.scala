@@ -33,10 +33,7 @@ import com.stephengream.lathanbot.services.IrcService
 
 @RestController
 @RequestMapping(Array("/irc"))
-class IrcController() {
-  @Autowired
-  private var irc : IrcService = null
-  
+class IrcController(@Autowired irc : IrcService) {
   @RequestMapping(value = Array("/ping"), method = Array(RequestMethod.GET))
   def sendPing() : StatusObject = {
     irc.sendMessage("Bot up and running!")

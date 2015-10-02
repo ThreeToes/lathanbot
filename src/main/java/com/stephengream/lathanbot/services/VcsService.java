@@ -29,6 +29,6 @@ package com.stephengream.lathanbot.services;
  *
  * @author stephen
  */
-public interface VcsService {
+public interface VcsService extends Runnable{
     
 }

@@ -27,11 +27,12 @@ repositories {
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
-    compile 'org.thymeleaf:thymeleaf-spring4'
-    compile 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
-    compile 'org.scala-lang:scala-library:2.11.+'
-    compile 'org.pircbotx:pircbotx:2.0.+'
-    compile 'javax.inject:javax.inject:1'
+    compile("org.thymeleaf:thymeleaf-spring4")
+    compile("nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect")
+    compile("org.scala-lang:scala-library:2.11.+")
+    compile("org.pircbotx:pircbotx:2.0.+")
+    compile("org.eclipse.jgit:org.eclipse.jgit:4.0.+")
+    compile("javax.inject:javax.inject:1")
     // tag::actuator[]
     compile("org.springframework.boot:spring-boot-starter-actuator")
     // end::actuator[]

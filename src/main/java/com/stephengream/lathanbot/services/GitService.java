@@ -23,25 +23,17 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+package com.stephengream.lathanbot.services;
 
-package com.stephengream.lathanbot.controllers
-import org.springframework.web.bind.annotation.{RestController, RequestMapping, ResponseBody, RequestMethod}
-import org.springframework.beans.factory.annotation.Autowired
-import com.stephengream.lathanbot.models.StatusObject
-import com.stephengream.lathanbot.services.IrcService
+/**
+ *
+ * @author stephen
+ */
+public class GitService implements VcsService{
 
-
-@RestController
-@RequestMapping(Array("/irc"))
-class IrcController() {
-  @Autowired
-  private var irc : IrcService = null
-  
-  @RequestMapping(value = Array("/ping"), method = Array(RequestMethod.GET))
-  def sendPing() : StatusObject = {
-    irc.sendMessage("Bot up and running!")
-    var status = new StatusObject()
-    status.setMessage("Ok")
-    status
-  }
+    @Override
+    public void run() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
 }

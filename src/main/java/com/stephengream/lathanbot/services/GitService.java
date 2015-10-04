@@ -57,10 +57,11 @@ public class GitService implements VcsService{
     @Override
     public void run() {
         try{
-            mostRecent = new Date().getTime();
             File gitDir = new File(repoUrl);
             
             Git git = Git.open(gitDir);
+            
+            mostRecent = (long)getMostRecentTime(git);
             
             do{
                 echoNewCommits(git);
@@ -69,6 +70,13 @@ public class GitService implements VcsService{
         }catch(Exception e){
             throw new RuntimeException(e);
         }
+    }
+    
+    private int getMostRecentTime(Git g) throws GitAPIException {
+        for(RevCommit commit : g.log().setMaxCount(1).call()){
+            return commit.getCommitTime();
+        }
+        return 0;
     }
 
     private void echoNewCommits(Git git) throws GitAPIException {

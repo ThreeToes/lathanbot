@@ -99,4 +99,10 @@ public class PircBotIrcService extends ListenerAdapter implements IrcService{
         connect();
     }
     
+    @Override
+    public Boolean isConnected(){
+        if(bot == null)
+            return false;
+        return bot.isConnected();
+    }
 }

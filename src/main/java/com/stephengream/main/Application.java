@@ -27,10 +27,14 @@ public class Application {
         return new GitService();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         ApplicationContext ctx = SpringApplication.run(Application.class, args);
+        final IrcService bot = ctx.getBean(IrcService.class);
         
-        (new Thread(ctx.getBean(IrcService.class))).start();
+        (new Thread(bot)).start();
+        while(!bot.isConnected()){
+            Thread.sleep(30000);
+        }
         (new Thread(ctx.getBean(VcsService.class))).start();
         System.out.println("AFTER THE BOT CONNECT!");
     }

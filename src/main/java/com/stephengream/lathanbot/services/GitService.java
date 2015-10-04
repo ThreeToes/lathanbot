@@ -25,6 +25,7 @@
  */
 package com.stephengream.lathanbot.services;
 
+import com.sun.javafx.binding.Logging;
 import java.io.File;
 import java.util.Date;
 import org.eclipse.jgit.api.Git;
@@ -32,6 +33,7 @@ import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.internal.storage.file.FileRepository;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -87,11 +89,13 @@ public class GitService implements VcsService{
                     .call();
         }
         Long newMostRecent = 0l;
+        Logger.getLogger(getClass().getName()).log(Logger.Level.INFO, "Getting new commits...");
         for(RevCommit commit : git.log().call()){
             if(commit.getCommitTime() > newMostRecent){
                 newMostRecent = (long)commit.getCommitTime();
             }
-            if(mostRecent > commit.getCommitTime()){
+            if(mostRecent >= commit.getCommitTime()){
+                Logger.getLogger(getClass().getName()).log(Logger.Level.INFO, "Finished getting commits");        
                 break;
             }
             String msg = String.format("Git commit: %s: %s",

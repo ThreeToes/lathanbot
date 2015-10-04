@@ -41,4 +41,6 @@ public interface IrcService extends Runnable{
      * Connect the service
      */
     public void connect();
+
+    Boolean isConnected();
 }

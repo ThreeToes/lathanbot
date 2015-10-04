@@ -25,15 +25,75 @@
  */
 package com.stephengream.lathanbot.services;
 
+import java.io.File;
+import java.util.Date;
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.internal.storage.file.FileRepository;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevCommit;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+
 /**
  *
  * @author stephen
  */
 public class GitService implements VcsService{
-
+    @Autowired
+    private IrcService irc;
+    
+    @Value("${git.repo.url}")
+    private String repoUrl;
+    
+    @Value("${git.repo.remote}")
+    private String remote; 
+    
+    @Value("${git.repo.cooldown}")
+    private int cooldown;
+    
+    private Long mostRecent;
+    
     @Override
     public void run() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try{
+            mostRecent = new Date().getTime();
+            File gitDir = new File(repoUrl);
+            
+            Git git = Git.open(gitDir);
+            
+            do{
+                echoNewCommits(git);
+                Thread.sleep(cooldown);
+            }while(true);
+        }catch(Exception e){
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void echoNewCommits(Git git) throws GitAPIException {
+        if(remote != null && !remote.isEmpty()){
+            git.pull()
+                    .setRemote(remote)
+                    .setRemoteBranchName("master")
+                    .call();
+        }
+        Long newMostRecent = 0l;
+        for(RevCommit commit : git.log().call()){
+            if(commit.getCommitTime() > newMostRecent){
+                newMostRecent = (long)commit.getCommitTime();
+            }
+            if(mostRecent > commit.getCommitTime()){
+                break;
+            }
+            String msg = String.format("Git commit: %s: %s",
+                    commit.getCommitterIdent().getName(),
+                    commit.getFullMessage());
+            irc.sendMessage(msg);
+        }
+        mostRecent = newMostRecent == 0
+                ? mostRecent
+                : newMostRecent;
     }
     
 }
